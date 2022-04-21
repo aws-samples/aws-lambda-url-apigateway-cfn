@@ -1,0 +1,84 @@
+# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: MIT-0
+
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: 'Sample Lambda function deployment with functions URL'
+###
+### CloudFormation Metadata
+###
+
+Metadata:
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+    - Label: 
+        default: Parameter Definition
+      Parameters:
+      - pLambdaFunctionName
+    ParameterLabels:
+      pLambdaFunctionName:
+        default: Lambda Function Name
+
+###
+### Template input parameters
+###
+
+Parameters:
+  pLambdaFunctionName:
+    Type: String
+    AllowedPattern: ^[a-zA-Z0-9-\-_.]{3,63}
+    Description: Name of the Lambda Function
+
+
+Resources:
+
+# Lambda Function with Sample inline code
+  LambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        ZipFile: |
+          def handler(event, context):
+            response = {
+              'isBase64Encoded': False,
+              'statusCode': 200,
+              'headers': {},
+              'multiValueHeaders': {},
+              'body': 'Hello, World! from Lambda Function with functions URL'
+            }
+            return response          
+      Description: AWS Lambda function
+      FunctionName: !Ref pLambdaFunctionName
+      Handler: index.handler
+      MemorySize: 256
+      Role: !GetAtt LambdaIamRole.Arn
+      Runtime: python3.8
+      Timeout: 60
+#Lambda Function URL creation resource
+  LambdaFunctionUrl:
+    Type: AWS::Lambda::Url
+    Properties:
+      TargetFunctionArn: !Ref LambdaFunction
+      AuthType: NONE
+#Lambda Function URl permission
+  LambdaFunctionUrlPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref LambdaFunction
+      Principal: '*'
+      Action: 'lambda:InvokeFunctionUrl'
+      FunctionUrlAuthType: NONE
+# Lambda Function IAM permission
+  LambdaIamRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: 'Allow'
+            Principal:
+              Service:
+                - 'lambda.amazonaws.com'
+            Action:
+              - 'sts:AssumeRole'
+      Path: '/'

@@ -61,13 +61,13 @@ Resources:
       TargetFunctionArn: !Ref LambdaFunction
       AuthType: NONE
 #Lambda Function URl permission
-  LambdaFunctionUrlPermission:
-    Type: AWS::Lambda::Permission
-    Properties:
-      FunctionName: !Ref LambdaFunction
-      Principal: '*'
-      Action: 'lambda:InvokeFunctionUrl'
-      FunctionUrlAuthType: NONE
+#  LambdaFunctionUrlPermission:
+#    Type: AWS::Lambda::Permission
+#    Properties:
+#      FunctionName: !Ref LambdaFunction
+#      Principal: '*'
+#      Action: 'lambda:InvokeFunctionUrl'
+#      FunctionUrlAuthType: NONE
 # Lambda Function IAM permission
   LambdaIamRole:
     Type: AWS::IAM::Role

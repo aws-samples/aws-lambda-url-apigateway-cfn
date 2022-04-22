@@ -30,3 +30,8 @@ jobs:
         uses: stelligent/cfn_nag@master
         with:
             input_path: src
+      #Run CFN Lint
+      - name: Testing with CFN Lint Command
+        uses: scottbrenner/cfn-lint-action@v2
+        with:
+          command: cfn-lint -t ./**/*.yaml

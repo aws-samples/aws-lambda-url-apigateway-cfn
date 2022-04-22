@@ -51,6 +51,7 @@ Resources:
       FunctionName: !Ref pLambdaFunctionName
       Handler: index.handler
       MemorySize: 256
+      ReservedConcurrentExecutions: 100
       Role: !GetAtt LambdaIamRole.Arn
       Runtime: python3.8
       Timeout: 60
@@ -60,15 +61,6 @@ Resources:
     Properties:
       TargetFunctionArn: !Ref LambdaFunction
       AuthType: NONE
-#Lambda Function URl permission
-#  LambdaFunctionUrlPermission:
-#    Type: AWS::Lambda::Permission
-#    Properties:
-#      FunctionName: !Ref LambdaFunction
-#      Principal: '*'
-#      Action: 'lambda:InvokeFunctionUrl'
-#      FunctionUrlAuthType: NONE
-# Lambda Function IAM permission
   LambdaIamRole:
     Type: AWS::IAM::Role
     Properties:
@@ -82,3 +74,14 @@ Resources:
             Action:
               - 'sts:AssumeRole'
       Path: '/'
+      Policies:
+        - PolicyName: root
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+            - Effect: Allow
+              Action:
+              - logs:CreateLogGroup
+              - logs:CreateLogStream
+              - logs:PutLogEvents
+              Resource: arn:aws:logs:*:*:*

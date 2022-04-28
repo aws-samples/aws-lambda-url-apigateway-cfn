@@ -61,6 +61,7 @@ Resources:
             return response          
       Description: AWS Lambda function
       FunctionName: !Ref pLambdaFunctionName
+      #Best practice to attach VPC, but to access url from internet please comment this VPCConfig section
       VpcConfig:
         SecurityGroupIds: 
           - Ref: pVPCSecurityGroup

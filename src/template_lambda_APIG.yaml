@@ -16,6 +16,8 @@ Metadata:
       Parameters:
       - pLambdaFunctionName
       - pApiGatewayName
+      - pVPCSecurityGroup
+      - pVPCSubnet
     ParameterLabels:
       pLambdaFunctionName:
         default: Lambda Function Name
@@ -40,11 +42,11 @@ Parameters:
     AllowedPattern: ^[a-zA-Z0-9-\-_.]{3,63}
     Description: Name of API Gateway
   pVPCSecurityGroup:
-    Type: String
-    Description: Name of VPC Security Group
+    Type: AWS::EC2::SecurityGroup::Id
+    Description: Select VPC Security Group
   pVPCSubnet:
-    Type: String
-    Description: Name of Subnet under VPC 
+    Type: AWS::EC2::Subnet::Id
+    Description: Select Subnet under VPC 
   
 ###
 ### Template Resources
@@ -152,8 +154,8 @@ Resources:
       Description: AWS Lambda function
       FunctionName: !Ref pLambdaFunctionName
       VpcConfig:
-        SecurityGroupIds:
-          - Ref: pVPCSecurityGroup	
+        SecurityGroupIds: 
+          - Ref: pVPCSecurityGroup
         SubnetIds:
           - Ref: pVPCSubnet
       Handler: index.handler

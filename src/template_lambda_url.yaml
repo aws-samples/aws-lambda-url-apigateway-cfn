@@ -15,6 +15,8 @@ Metadata:
         default: Parameter Definition
       Parameters:
       - pLambdaFunctionName
+      - pVPCSecurityGroup
+      - pVPCSubnet
     ParameterLabels:
       pLambdaFunctionName:
         default: Lambda Function Name
@@ -66,7 +68,6 @@ Resources:
           - Ref: pVPCSubnet
       Handler: index.handler
       MemorySize: 256
-      ReservedConcurrentExecutions: 100
       Role: !GetAtt LambdaIamRole.Arn
       Runtime: python3.8
       Timeout: 60
@@ -79,6 +80,8 @@ Resources:
   LambdaIamRole:
     Type: AWS::IAM::Role
     Properties:
+      ManagedPolicyArns:
+       - "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:

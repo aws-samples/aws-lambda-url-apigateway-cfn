@@ -68,6 +68,7 @@ Resources:
           - Ref: pVPCSubnet
       Handler: index.handler
       MemorySize: 256
+      ReservedConcurrentExecutions: 100
       Role: !GetAtt LambdaIamRole.Arn
       Runtime: python3.8
       Timeout: 60

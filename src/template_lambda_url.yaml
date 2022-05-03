@@ -15,9 +15,15 @@ Metadata:
         default: Parameter Definition
       Parameters:
       - pLambdaFunctionName
+      - pVPCSecurityGroup
+      - pVPCSubnet
     ParameterLabels:
       pLambdaFunctionName:
         default: Lambda Function Name
+      pVPCSecurityGroup:
+        default: Security Group Name
+      pVPCSubnet:
+        default: Subnet Name
 
 ###
 ### Template input parameters
@@ -28,6 +34,12 @@ Parameters:
     Type: String
     AllowedPattern: ^[a-zA-Z0-9-\-_.]{3,63}
     Description: Name of the Lambda Function
+  pVPCSecurityGroup:
+    Type: AWS::EC2::SecurityGroup::Id
+    Description: Select VPC Security Group
+  pVPCSubnet:
+    Type: AWS::EC2::Subnet::Id
+    Description: Select Subnet under VPC 
 
 
 Resources:
@@ -49,6 +61,12 @@ Resources:
             return response          
       Description: AWS Lambda function
       FunctionName: !Ref pLambdaFunctionName
+      #Best practice to attach VPC, but to access url from internet please comment this VPCConfig section
+      VpcConfig:
+        SecurityGroupIds: 
+          - Ref: pVPCSecurityGroup
+        SubnetIds:
+          - Ref: pVPCSubnet
       Handler: index.handler
       MemorySize: 256
       ReservedConcurrentExecutions: 100
@@ -64,6 +82,8 @@ Resources:
   LambdaIamRole:
     Type: AWS::IAM::Role
     Properties:
+      ManagedPolicyArns:
+       - "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:

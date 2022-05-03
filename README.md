@@ -19,9 +19,13 @@ Below cnf templates are part of this repo
 * Parameter values
     * Enter the name of the Lambda Function for the `template_lambda_url.yaml` Cloudformation Template as per below sample and enter appropriate name
         * __Lambda Function Name : "test-lambda-url"__
+        * __Security Group Name : <Select Security Group>__
+        * __Subnet Name : <Select subnet>__
     * Enter the name of the Lambda Function for the `template_lambda_APIG.yaml` Cloudformation Template as per below sample and enter appropriate name
         * __Lambda Function Name : "test-lambda-apig"__
         * __Lambda API Gateway : "test-apig"__
+        * __Security Group Name : <Select the Security Group>__
+        * __Subnet Name : <Select the subnet>__
 * Validation and Testing
     * Testing Lambda function URL - On the CloudFormation console validate the deployment is completed. Once the deployment completed, on the Lambda Function console get the functions URL and test the URL by invoking.Find below the sample invoke request
     ``` bash

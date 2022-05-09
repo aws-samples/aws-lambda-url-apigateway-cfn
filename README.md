@@ -15,17 +15,34 @@ Below cnf templates are part of this repo
 ## Deployment and Validation
 * Deploying cloudformation templates
     * On the CloudFormation console, deploy the `template_lambda_url.yaml` CloudFormation template that's downloaded or cloned from this repo. In the next step, provide values for the template parameters.
+        * Deployment Steps
+            * Go to CloudFormation console in the AWS Account
+            * Select Create Stack (With new resources) -> then Select "Template is Ready' and "Upload a template file" option
+            * Upload the yaml file download or cloned, click Next and then follow next step to enter the details. Once details completed, click next and deploy
+
     * On the CloudFormation console, deploy the `template_lambda_APIG.yaml` CloudFormation template that's downloaded or cloned using the first epic. In the next epic, provide values for the template parameters.
+        * Deployment Steps
+            * Go to CloudFormation console in the AWS Account
+            * Select Create Stack (With new resources) -> then Select "Template is Ready' and "Upload a template file" option
+            * Upload the yaml file download or cloned, click Next and then follow next step to enter the details. Once details completed, click next and deploy
 * Parameter values
     * Enter the name of the Lambda Function for the `template_lambda_url.yaml` Cloudformation Template as per below sample and enter appropriate name
-        * __Lambda Function Name : "test-lambda-url"__
-        * __Security Group Name : &#60;Select Security Group&#62;__
-        * __Subnet Name : &#60;Select subnet&#62;__
+        * __Sample Input__
+            * __Stack Name : "lambda-url-stack"__
+            * __Lambda Function Name : "test-lambda-url"__
+            * __Security Group Name : &#60;Select Security Group&#62;__
+            * __Subnet Name : &#60;Select subnet&#62;__
+        * __Output__
+            * __Lambda Function URL : &#60;returns the function url in the outputs section of stack&#62;"__
     * Enter the name of the Lambda Function for the `template_lambda_APIG.yaml` Cloudformation Template as per below sample and enter appropriate name
-        * __Lambda Function Name : "test-lambda-apig"__
-        * __Lambda API Gateway : "test-apig"__
-        * __Security Group Name : &#60;Select the Security Group&#62;__
-        * __Subnet Name : &#60;Select the subnet&#62;__
+        * __Sample Input__
+            * __Stack Name : "apgi-lambda-stack"__
+            * __Lambda Function Name : "test-lambda-apig"__
+            * __API Gateway Name : "test-apig"__
+            * __Security Group Name : &#60;Select the Security Group&#62;__
+            * __Subnet Name : &#60;Select the subnet&#62;__
+        * __Output__
+            * __API Gateway URL : &#60;returns the API Gateway url in the outputs section of stack&#62;"__
 * Validation and Testing
     * Testing Lambda function URL - On the CloudFormation console validate the deployment is completed. Once the deployment completed, on the Lambda Function console get the functions URL and test the URL by invoking.Find below the sample invoke request
     ``` bash

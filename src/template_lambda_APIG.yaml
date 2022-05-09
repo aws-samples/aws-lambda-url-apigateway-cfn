@@ -22,7 +22,7 @@ Metadata:
       pLambdaFunctionName:
         default: Lambda Function Name
       pApiGatewayName:
-        default: Lambda API Gateway
+        default: API Gateway Name
       pVPCSecurityGroup:
         default: Security Group Name
       pVPCSubnet:

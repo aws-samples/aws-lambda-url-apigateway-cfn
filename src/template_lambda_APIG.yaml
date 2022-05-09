@@ -192,3 +192,6 @@ Resources:
               - logs:CreateLogStream
               - logs:PutLogEvents
               Resource: arn:aws:logs:*:*:*
+Outputs:
+  apiGatewayInvokeURL:
+    Value: !Sub https://${ApiGatewayRestApi}.execute-api.${AWS::Region}.amazonaws.com/${ApiGatewayStage}/lambda
